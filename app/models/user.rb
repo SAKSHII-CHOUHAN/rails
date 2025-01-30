@@ -4,10 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :username, presence: true, uniqueness: true
-  validates :restaurant_name, presence: true
-  validates :location, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
-  validates :contact, presence: true
+  has_many :menus
+  has_many :tables
+  has_many :staffs
 end

@@ -1,0 +1,49 @@
+ <!-- Add new fields below -->
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= f.label :restaurant_name %><br />
+    <%= f.text_field :restaurant_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </div>
+
+  <div class="field">
+    <%= f.label :contact %><br />
+    <%= f.text_field :contact %>
+  </div>
+
+
+   t.string "email", default: "", null: false
+      t.string "username"
+      t.string "restaurant_name"
+      t.string "location"
+      t.string "city"
+      t.string "state"
+      t.string "contact"
+
+
+  validates :username, presence: true, uniqueness: true
+  validates :restaurant_name, presence: true
+  validates :location, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+  validates :contact, presence: true
+
+  
