@@ -4,8 +4,8 @@ class CreateOrders < ActiveRecord::Migration[8.0]
       t.integer :contact
       t.string :status
       t.decimal :total_amount 
-      t.belongs_to :user
-      t.belongs_to :table
+      t.references :restaurant
+      t.references :table
       t.timestamps
     end
   end

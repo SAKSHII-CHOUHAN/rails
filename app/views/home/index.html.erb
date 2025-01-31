@@ -13,15 +13,6 @@
     <div class="buttons">
       <%= link_to 'Sign Up', new_user_registration_path, class: 'btn-signup' %>
       <%= link_to 'Sign In', new_user_session_path, class: 'btn-signin' %>
-
-
-      <% if current_staff %>
-      <%= link_to "sign_out", destroy_staff_session_path, method: :delete, data: { turbo_method: :delete }  %>
-      <% end %>
-
-      <% if current_user %>
-      <%= link_to "sign_out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }  %>
-      <% end %>
     </div>
   </div>
 </body>

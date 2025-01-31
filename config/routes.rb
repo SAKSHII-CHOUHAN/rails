@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
-  devise_for :users
-  devise_for :staffs
-  get "dashboard/index"
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  
   root "home#index"
-  # devise_for :users
+  get "dashboard/index"
 
-  # authenticated :user do
-  #   root 'dashboard#index', as: :authenticated_root
-  # end
+  resources :menu_items
+  resources :tables
+  devise_for :users
+
+  authenticated :user do
+    root 'dashboard#index', as: :authenticated_root
+  end
  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -22,9 +26,4 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   # root "users/registration#new"
-  resources :restaurants do
-    resources :menus do
-      resources :menu_items
-    end
-  end
 end

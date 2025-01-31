@@ -5,7 +5,7 @@ class CreateOrderItems < ActiveRecord::Migration[8.0]
       t.text :description
       t.integer :quantity 
       t.decimal :amount
-      t.belongs_to :order
+      t.references :order
       t.timestamps
     end
   end

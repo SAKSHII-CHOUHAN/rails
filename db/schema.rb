@@ -10,9 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_30_133127) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_31_073502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "menu_items", force: :cascade do |t|
     t.string "name"
@@ -20,19 +46,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_30_133127) do
     t.string "category"
     t.text "description"
     t.boolean "availability_status"
-    t.bigint "menu_id"
+    t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_menu_items_on_menu_id"
-  end
-
-  create_table "menus", force: :cascade do |t|
-    t.string "name"
-    t.boolean "active_status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_menus_on_user_id"
+    t.index ["restaurant_id"], name: "index_menu_items_on_restaurant_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -50,20 +67,31 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_30_133127) do
     t.integer "contact"
     t.string "status"
     t.decimal "total_amount"
-    t.bigint "user_id"
+    t.bigint "restaurant_id"
     t.bigint "table_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"
     t.index ["table_id"], name: "index_orders_on_table_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name"
+    t.text "address"
+    t.string "owner_name"
+    t.string "owner_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tables", force: :cascade do |t|
-    t.integer "table_nu"
+    t.string "table_number"
     t.integer "guest_quantity"
-    t.string "table_status"
+    t.integer "table_status"
+    t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_tables_on_restaurant_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -74,7 +102,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_30_133127) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role"
+    t.bigint "restaurant_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["restaurant_id"], name: "index_users_on_restaurant_id"
   end
+
+  add_foreign_key "users", "restaurants"
 end

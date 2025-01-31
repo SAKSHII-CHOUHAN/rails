@@ -48,6 +48,7 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  gem 'byebug'
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
@@ -62,7 +63,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+gem "sassc-rails"
+gem 'activeadmin'
 
-gem "tailwindcss-ruby", "~> 4.0"
+# gem "tailwindcss-ruby", "~> 4.0"
 
-gem "tailwindcss-rails", "~> 3.3"
+# gem "tailwindcss-rails", "~> 3.3"
