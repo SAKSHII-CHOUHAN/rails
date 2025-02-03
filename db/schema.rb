@@ -44,8 +44,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_073502) do
     t.string "name"
     t.decimal "price"
     t.string "category"
-    t.text "description"
-    t.boolean "availability_status"
+    t.integer "availability_status"
     t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -54,7 +53,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_073502) do
 
   create_table "order_items", force: :cascade do |t|
     t.string "name"
-    t.text "description"
     t.integer "quantity"
     t.decimal "amount"
     t.bigint "order_id"
@@ -64,8 +62,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_073502) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "contact"
-    t.string "status"
+    t.integer "status"
     t.decimal "total_amount"
     t.bigint "restaurant_id"
     t.bigint "table_id"

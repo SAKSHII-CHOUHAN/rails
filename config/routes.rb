@@ -3,15 +3,22 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   
   root "home#index"
-  get "dashboard/index"
-
+  # get "dashboard/index"
+  resources :dashboard
   resources :menu_items
+  
   resources :tables
+  resources :orders
+  resources :order_items
+  resources :tables do
+    post 'create_order', to: 'orders#create'
+  end
+  
   devise_for :users
 
-  authenticated :user do
-    root 'dashboard#index', as: :authenticated_root
-  end
+  # authenticated :user do
+  #   root 'dashboard#index', as: :authenticated_root
+  # end
  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

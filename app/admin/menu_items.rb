@@ -5,7 +5,7 @@ ActiveAdmin.register MenuItem do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :price, :category, :description, :availability_status, :restaurant_id
+  permit_params :name, :price, :category, :availability_status, :restaurant_id
   #
   # or
   #

@@ -1,3 +1,22 @@
-<% @orders.each do |order| %>
-  <%= render order %>
-<% end %>
+<h2> Orders </h2>
+<div>
+  <% @orders.each do |order| %>
+    <table>
+      <tr>
+        <th>id </th>
+        <th> Total amount </th>
+        <th> Status </th>
+        <th> Restaurant </th>
+        <th> Table </th>
+      </tr>
+      <tr>
+        <td> <%= order.id %></td><br>
+        <td> <%= order.total_amount %></td><br>
+        <td> <%= order.status %></td><br>
+        <td> <%= order.restaurant.name %></td><br>
+        <td> <%= order.table.table_number %></td><br> 
+        <td> <%= link_to "View", order_item_path(order) %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>

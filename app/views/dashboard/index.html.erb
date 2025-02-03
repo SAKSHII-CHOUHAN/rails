@@ -1,8 +1,45 @@
 <div>
-  <h1 class="font-bold text-4xl">Dashboard</h1>
-  
-<% if current_user %>
-  <%= link_to "Sign_out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
-<% end %>
+  <h1><%= current_user.restaurant.name %> Dashboard</h1>
 </div>
 
+<div>
+  <h3>Tables</h3>
+  <table>
+    <% @tables.each do |table| %>
+      <tr>
+      <td><%= link_to table.table_number, table_path(table) %></td>
+      <td><%= table.table_status %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div>
+  <h3>Menu Items</h3>
+  <table border='1'>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Availability Status</th>
+    </tr>
+
+    <% @menu_items.each do |menu_item| %>
+      <tr>
+        <td><%= menu_item.name %></td>
+        <td><%= menu_item.price %></td>
+        <td><%= menu_item.category %></td>
+        <td><%= menu_item.availability_status %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<div>
+  <%= link_to "Orders", orders_path %>
+</div>
+<div>
+  <% if current_user %>
+    <%= link_to "Sign_out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
+  <% end %>
+</div>

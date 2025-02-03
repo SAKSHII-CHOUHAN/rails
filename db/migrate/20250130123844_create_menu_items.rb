@@ -4,8 +4,7 @@ class CreateMenuItems < ActiveRecord::Migration[8.0]
       t.string :name
       t.decimal :price 
       t.string :category
-      t.text :description
-      t.boolean :availability_status
+      t.integer :availability_status
       t.references :restaurant
    
       t.timestamps
