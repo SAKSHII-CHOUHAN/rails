@@ -65,7 +65,7 @@ group :test do
 end
 gem "sassc-rails"
 gem 'activeadmin'
-
+gem 'will_paginate'
 # gem "tailwindcss-ruby", "~> 4.0"
 
 # gem "tailwindcss-rails", "~> 3.3"

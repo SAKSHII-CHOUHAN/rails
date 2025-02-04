@@ -1,22 +1,39 @@
-<h2> Orders </h2>
-<div>
-  <% @orders.each do |order| %>
-    <table>
-      <tr>
-        <th>id </th>
-        <th> Total amount </th>
-        <th> Status </th>
-        <th> Restaurant </th>
-        <th> Table </th>
-      </tr>
-      <tr>
-        <td> <%= order.id %></td><br>
-        <td> <%= order.total_amount %></td><br>
-        <td> <%= order.status %></td><br>
-        <td> <%= order.restaurant.name %></td><br>
-        <td> <%= order.table.table_number %></td><br> 
-        <td> <%= link_to "View", order_item_path(order) %></td>
-      </tr>
-    </table>
-  <% end %>
+</div><h2 class="text-center text-primary my-4">Orders</h2>
+
+<div class="container">
+  <div class="card shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h4 class="mb-0">Order List</h4>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Order ID</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Restaurant</th>
+            <th>Table</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.id %></td>
+              <td>₹<%= order.total_amount %></td>
+              <td><%= order.status %></td>
+              <td><%= order.restaurant.name %></td>
+              <td><%= order.table.table_number %></td>
+              <td><%= link_to "View", order_item_path(order), class: "btn btn-info btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+        <%= will_paginate @orders %>
+    </div>
+    <div class="shadow">
+    <%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-secondary mt-3 mb-2 ml-3" %>
+  </div>
+</div>
 </div>

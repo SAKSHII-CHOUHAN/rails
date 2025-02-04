@@ -3,18 +3,11 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   
   root "home#index"
-  # get "dashboard/index"
-  resources :dashboard
+  resources :dashboard, only: [:index]
   resources :menu_items
   
   resources :tables
-  resources :orders do
-    member do
-      get 'edit', to: 'orders#edit', as: :edit
-      patch 'completed', to: 'orders#complete_order', as: :complete
-    end
-  end
-  
+  resources :orders
   resources :order_items
   resources :tables do
     post 'create_order', to: 'orders#create'
@@ -22,10 +15,6 @@ Rails.application.routes.draw do
   
   devise_for :users
 
-  # authenticated :user do
-  #   root 'dashboard#index', as: :authenticated_root
-  # end
- 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

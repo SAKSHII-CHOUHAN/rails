@@ -1,40 +1,60 @@
-<div>
-  <h1><%= @table.table_number %> Details</h1>
-  <p><strong>Status:</strong> <%= @table.table_status %></p>
-  <p><strong>Guest Quantity:</strong> <%= @table.guest_quantity %></p>
-</div>
+<div class="container mt-4">
+  <div class="card p-4 shadow">
+    <h1 class="mb-3">Table <%= @table.table_number %> Details</h1>
+    
+    <p><strong>Status:</strong> <%= @table.table_status %></p>
+    <p><strong>Guest Quantity:</strong> <%= @table.guest_quantity %></p>
+  </div>
 
-<%= form_with url: table_create_order_path(@table), method: :post do |f| %>
-  
-  <h3>Menu Items</h3>
-  <div>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Quantity</th>
-      </tr>
-    <% @menu_items.each do |item| %>
-      <tr>
-      
-        <td><label><%= item.name %></label></td>
-        <td><label> ₹<%= item.price %></label></td>
-        <td><label><%= item.category %></label></td>
-        <td><label><%= item.availability_status %></label></td>
-        <td><%= select_tag "order[items][#{item.id}]", options_for_select((0..20).to_a, 0) %></td>
-      </tr>
+  <div class="card mt-4 p-4 shadow">
+    <h3>Menu Items</h3>
+    <%= render "menu_items/search" %>.<br>
+
+    <%= form_with url: table_create_order_path(@table), method: :post, class: "mt-3" do |f| %>
+      <table class="table table-striped"">
+        <thead class="table-dark">
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @menu_items.each do |item| %>
+            <tr>
+              <td>
+                <% if item.image.present? %>
+                <%= image_tag(url_for(item.image), size: "40x40") %>
+                <%end%>
+              </td>
+              <td><%= item.name %></td>
+              <td>₹<%= item.price %></td>
+              <td><%= item.category %></td>
+              <td><%= item.availability_status %></td>
+              <td>
+                <%= select_tag "order[items][#{item.id}]", options_for_select((0..20).to_a, 0), class: "form-select" %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+          </table>
+          <%= will_paginate @menu_items %>
+      <%= f.submit "Place Order", class: "btn btn-primary mt-3" %>
     <% end %>
-    </table>
   </div>
-  
-  <%= f.submit "Place Order" %>
-<% end %>
 
-<% if @order.present?%>
-  <div>
-  <%= render partial: "order_items/items" %>
+  <% if @order.present? %>
+    <div class="card mt-4 p-4 shadow">
+      <%= form_with url: order_path(@order), method: :patch do |f| %>
+        <%= render partial: "order_items/items" %>
+        <%= f.submit "Complete Order", class: "btn btn-primary mt-3" %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="shadow">
+    <%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-secondary mt-3" %>
   </div>
-<%end%>
-<%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-secondary" %>
+</div>

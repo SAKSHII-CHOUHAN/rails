@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
-  enum :role, [:owner, :manager, :table_attender]
+
+  enum :role, [ :owner, :manager, :table_attender ]
   belongs_to :restaurant
 end

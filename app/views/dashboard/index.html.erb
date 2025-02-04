@@ -1,45 +1,71 @@
-<div>
-  <h1><%= current_user.restaurant.name %> Dashboard</h1>
-</div>
+<div class="container mt-4">
+  <h1 class="text-center primary-emphasis"><%= current_user.restaurant.name %> Dashboard</h1>
 
-<div>
-  <h3>Tables</h3>
-  <table>
-    <% @tables.each do |table| %>
-      <tr>
-      <td><%= link_to table.table_number, table_path(table) %></td>
-      <td><%= table.table_status %></td>
-      </tr>
+  <div class="card shadow mt-4">
+    <div class="card-header bg-secondary text-white">
+      <h3 class="mb-0">Tables</h3>
+    </div>
+    <div class="card-body" >
+      <div class="row">
+        <% @tables.each do |table| %>
+          <div class="col-md-3 mb-3">
+            <div class="card text-center <%= table.table_status == 'occupied' ? 'bg-danger text-white' : 'bg-success text-white' %>">
+              <div class="card-body">
+                <%= link_to table.table_number, table_path(table), class: "text-decoration-none text-white fw-bold" %>
+                <p class="card-text"><%= table.table_status.capitalize %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <%= will_paginate @tables %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow mt-4">
+    <div class="card-header bg-secondary text-white">
+      <h3 class="mb-0">Menu Items</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Availability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @menu_items.each do |menu_item| %>
+            <tr>
+              <td>
+                <% if menu_item.image.present? %>
+                <%= image_tag(url_for(menu_item.image), :size => "40x40") %>
+                <%end%>
+              </td>
+              <td><%= menu_item.name %></td>
+              <td>₹<%= menu_item.price %></td>
+              <td><%= menu_item.category %></td>
+              <td>
+                <span class="badge <%= menu_item.availability_status == 'available' ? 'bg-success' : 'bg-secondary' %>">
+                  <%= menu_item.availability_status %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+        <%= will_paginate @menu_items %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <%= link_to "Orders", orders_path, class: "btn btn-primary fw-bold" %>
+
+    <% if current_user %>
+      <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "btn btn-primary fw-bold" %>
     <% end %>
-  </table>
-</div>
-
-<div>
-  <h3>Menu Items</h3>
-  <table border='1'>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Category</th>
-      <th>Availability Status</th>
-    </tr>
-
-    <% @menu_items.each do |menu_item| %>
-      <tr>
-        <td><%= menu_item.name %></td>
-        <td><%= menu_item.price %></td>
-        <td><%= menu_item.category %></td>
-        <td><%= menu_item.availability_status %></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
-
-<div>
-  <%= link_to "Orders", orders_path %>
-</div>
-<div>
-  <% if current_user %>
-    <%= link_to "Sign_out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
-  <% end %>
+  </div>
 </div>
