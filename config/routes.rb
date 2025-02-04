@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   resources :menu_items
   
   resources :tables
-  resources :orders
+  resources :orders do
+    member do
+      get 'edit', to: 'orders#edit', as: :edit
+      patch 'completed', to: 'orders#complete_order', as: :complete
+    end
+  end
+  
   resources :order_items
   resources :tables do
     post 'create_order', to: 'orders#create'

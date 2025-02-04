@@ -5,7 +5,6 @@ ActiveAdmin.register MenuItem do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :price, :category, :availability_status, :restaurant_id
   #
   # or
   #
@@ -14,5 +13,17 @@ ActiveAdmin.register MenuItem do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  remove_filter :image_attachment, :image_blob
+  permit_params :name, :price, :category, :availability_status, :restaurant_id, images:[]
   
+  form do |f|
+    f.inputs do
+      f.input :image, as:file
+      f.input :name
+      f.input :price
+      f.input :category
+      f.input :availability_status
+      f.input :restaurant
+    end
+  end
 end

@@ -1,0 +1,23 @@
+<%= form_with url: order_path(@order), method: :patch do |f| %>
+  <h3>Order Summary</h3>
+  <div>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+
+    <% @order_items&.each do |item| %>
+      <tr>
+        <td><label><%= item.name %></label></td>
+        <td><label>₹<%= item.amount %></label></td>
+        <td><label><%= item.quantity%></label></td>
+      </tr>
+    <% end %>
+    </table>
+  
+    <%= f.submit "Complete Order" %>
+  
+  </div>
+<% end %>
