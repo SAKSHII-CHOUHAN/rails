@@ -1,0 +1,21 @@
+<div class="card mt-4 p-4 shadow">
+  <h3>Order Items</h3>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order_items&.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td>₹<%= item.amount %></td>
+          <td><%= item.quantity %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

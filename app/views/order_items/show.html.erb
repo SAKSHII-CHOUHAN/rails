@@ -1,20 +1,6 @@
 <div>
-  <h3>Order Items</h3>
-  <table border='1'>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Amount</th>
-      <th>Order_id</th>
-    </tr>
-
-    <% @order_items.each do |item| %>
-      <tr>
-        <td><%= item.name %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.amount %></td>
-        <td><%= item.order_id %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render partial: "order_items/items" %>
+</div>
+<div class="shadow">
+<%= link_to "Back to orders", orders_path, class: "btn btn-secondary ml-2 mt-2 mb-3" %>
 </div>

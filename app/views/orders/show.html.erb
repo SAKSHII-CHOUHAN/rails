@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <div class="card p-4 shadow">
+    <h1 class="mb-3">Table <%= @table.table_number %> Details</h1>
+    
+    <p><strong>Status:</strong> <%= @table.table_status %></p>
+    <p><strong>Guest Quantity:</strong> <%= @table.guest_quantity %></p>
+  </div>
+
+  <div class="card mt-4 p-4 shadow">
+    <h3>Menu Items</h3>
+    <%= form_with url: table_create_order_path(@table), method: :post, class: "mt-3" do |f| %>
+      <table class="table table-striped"">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @menu_items.each do |item| %>
+            <tr>
+            <%= image_tag  @menu_item.image.to_s, class: "menu-item-image" %>
+              <td><%= item.name %></td>
+              <td>₹<%= item.price %></td>
+              <td><%= item.category %></td>
+              <td><%= item.availability_status %></td>
+              <td>
+                <%= select_tag "order[items][#{item.id}]", options_for_select((0..20).to_a, 0), class: "form-select" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= f.submit "Place Order", class: "btn btn-primary mt-3" %>
+    <% end %>
+  </div>
+
+  <% if @order.present? %>
+    <div class="card mt-4 p-4 shadow">
+      <%= form_with url: order_path(@order), method: :patch do |f| %>
+        <%= render partial: "order_items/items" %>
+        <%= f.submit "Complete Order", class: "btn btn-primary mt-3" %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="shadow">
+    <%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-secondary mt-3" %>
+  </div>
+</div>
