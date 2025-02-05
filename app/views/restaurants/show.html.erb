@@ -1,9 +1,19 @@
 <h1><%= @restaurant.name %></h1>
+<% link_to "Feedback", new_restaurant_feedback_path(@restaurant), :class => "btn btn-primary" %>
 
 <div class="card shadow mt-4">
   <div class="card-header bg-secondary text-white">
     <h3 class="mb-0">Menu Items</h3>
   </div>
+
+  <%= form_with(model: @restaurant, method: :get, class: "d-flex") do %>
+    <div class="input-group w-50">
+      <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search here", aria: {label: "Search"} %>
+      <button type="submit" class="btn btn-primary input-group-append btn-space">Search</button>
+      <%= button_to "Back", restaurant_path, :class => "btn btn-primary" %>
+    </div>
+  <% end %>
+
   <div class="card-body">
     <table class="table table-striped">
       <thead class="table-dark">

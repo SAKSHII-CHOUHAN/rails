@@ -1,4 +1,6 @@
-<%= form_with(model: @table, method: :get) do  %>
-  <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "search here" %>
-  <button type='submit'>Search</button>
+<%= form_with(model: @tables, method: :get, class: "d-flex") do %>
+  <div class="input-group w-50">
+    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search here", aria: {label: "Search"} %>
+    <button type="submit" class="btn btn-primary input-group-append">Search</button>
+  </div>
 <% end %>

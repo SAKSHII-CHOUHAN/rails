@@ -1,0 +1,31 @@
+<h1><%= @restaurant.name %></h1>
+<%= form_with(model: @feedback, method: :get, local: true, class: "feedback-form") do |form| %>
+  <% if @feedback.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Your Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter your name" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :email, "Your Email", class: "form-label" %>
+    <%= form.email_field :email, class: "form-control", placeholder: "Enter your email" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :comments, "Your Comments", class: "form-label" %>
+    <%= form.text_area :comments, class: "form-control", placeholder: "Write your feedback here", rows: 4 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Submit Feedback", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   resources :tables do
     post 'create_order', to: 'orders#create'
   end
-  resources :restaurants
+  
+  resources :restaurants do
+    resources :feedbacks
+  end
   devise_for :users
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

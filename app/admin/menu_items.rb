@@ -6,6 +6,10 @@ ActiveAdmin.register MenuItem do
   #   actions :index, :show 
   # end
 
+  # before_save do |item|
+  #   byebug
+  # end
+
   form do |f|
     f.inputs do
       f.input :image, as: :file
@@ -13,11 +17,7 @@ ActiveAdmin.register MenuItem do
       f.input :price
       f.input :category
       f.input :availability_status
-      # if current_admin_user.role == "super_admin"
-      #   f.input :restaurant
-      # else
-      # f.input :restaurant, input_html: {value: Restaurant.last}
-      # end
+      f.input :restaurant
     end
     f.actions
   end
@@ -25,7 +25,7 @@ ActiveAdmin.register MenuItem do
   show do
     attributes_table do
       row :image do |item|
-        image_tag url_for(item.image), size: "60x60"
+        image_tag url_for(item.image), size: "60x60" if item.image.present?
       end
       row :name
       row :price
