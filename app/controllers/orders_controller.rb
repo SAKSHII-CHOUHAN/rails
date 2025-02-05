@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
     order.update(total_amount: total_price)
 
     table.update(table_status: "occupied")
-    redirect_to table_path(table), notice: "Order placed successfully!"
+    redirect_to table_path(table)
   end
 
   def show

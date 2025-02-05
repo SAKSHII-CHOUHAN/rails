@@ -1,24 +1,10 @@
 ActiveAdmin.register MenuItem do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:name, :price, :category, :description, :availability_status, :restaurant_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
   remove_filter :image_attachment, :image_blob
   permit_params :name, :price, :category, :availability_status, :restaurant_id, :image
   
-  before_save do |item|
-    item.restaurant_id = 2
-  end
+  # if current_admin_user.role == "super_admin"
+  #   actions :index, :show 
+  # end
 
   form do |f|
     f.inputs do
@@ -30,12 +16,12 @@ ActiveAdmin.register MenuItem do
       # if current_admin_user.role == "super_admin"
       #   f.input :restaurant
       # else
-        # f.input :restaurant, input_html: {value: Restaurant.last}
+      # f.input :restaurant, input_html: {value: Restaurant.last}
       # end
     end
     f.actions
   end
-
+  
   show do
     attributes_table do
       row :image do |item|

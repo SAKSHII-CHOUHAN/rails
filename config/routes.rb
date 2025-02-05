@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  get "restaurants/show"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   
   root "home#index"
-  resources :dashboard, only: [:index]
+  resources :dashboard, only: [ :index ]
   resources :menu_items
   
   resources :tables
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
   resources :tables do
     post 'create_order', to: 'orders#create'
   end
-  
+  resources :restaurants
   devise_for :users
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

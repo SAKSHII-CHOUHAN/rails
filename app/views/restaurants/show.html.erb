@@ -1,0 +1,39 @@
+<h1><%= @restaurant.name %></h1>
+
+<div class="card shadow mt-4">
+  <div class="card-header bg-secondary text-white">
+    <h3 class="mb-0">Menu Items</h3>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Availability</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @menu_items.each do |menu_item| %>
+          <tr>
+            <td>
+              <% if menu_item.image.present? %>
+              <%= image_tag(url_for(menu_item.image), :size => "40x40") %>
+              <%end%>
+            </td>
+            <td><%= menu_item.name %></td>
+            <td>₹<%= menu_item.price %></td>
+            <td><%= menu_item.category %></td>
+            <td>
+              <span class="badge <%= menu_item.availability_status == 'available' ? 'bg-success' : 'bg-secondary' %>">
+                <%= menu_item.availability_status %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

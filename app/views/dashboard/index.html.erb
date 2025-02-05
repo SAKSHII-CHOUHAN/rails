@@ -1,6 +1,14 @@
 <div class="container mt-4">
   <h1 class="text-center primary-emphasis"><%= current_user.restaurant.name %> Dashboard</h1>
 
+  <div class="d-flex justify-content-between mt-4">
+  <%= link_to "Orders", orders_path, class: "btn btn-primary fw-bold" %>
+
+  <% if current_user %>
+    <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "btn btn-primary fw-bold" %>
+  <% end %>
+  </div>
+
   <div class="card shadow mt-4">
     <div class="card-header bg-secondary text-white">
       <h3 class="mb-0">Tables</h3>
@@ -59,13 +67,5 @@
       </table>
         <%= will_paginate @menu_items %>
     </div>
-  </div>
-
-  <div class="d-flex justify-content-between mt-4">
-    <%= link_to "Orders", orders_path, class: "btn btn-primary fw-bold" %>
-
-    <% if current_user %>
-      <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "btn btn-primary fw-bold" %>
-    <% end %>
   </div>
 </div>
