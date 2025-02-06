@@ -4,7 +4,7 @@ class RestaurantsController < ApplicationController
     if params[:search].present?
       @menu_items = @restaurant&.menu_items.
       where("category LIKE ?", params[:search].capitalize)
-      .or(current_user&.restaurant&.menu_items.where("name LIKE ?", params[:search]))
+      .or(@restaurant&.menu_items.where("name LIKE ?", params[:search].capitalize))
     else
       @menu_items = @restaurant.menu_items
     end 
