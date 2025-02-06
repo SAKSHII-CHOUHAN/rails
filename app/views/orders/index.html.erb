@@ -1,10 +1,8 @@
-</div><h2 class="text-center text-primary my-4">Orders</h2>
+<%= render 'shared/nav' %>
 
 <div class="container">
-  <div class="card shadow-sm">
-    <div class="card-header bg-info text-white">
-      <h4 class="mb-0">Order List</h4>
-    </div>
+  <div class="card shadow-sm mt-4 p-4">
+    <h3 m>Orders</h3>
     <div class="card-body">
       <table class="table table-bordered table-hover">
         <thead class="table-dark">
@@ -33,7 +31,7 @@
         <%= will_paginate @orders %>
     </div>
     <div class="shadow">
-    <%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-secondary mt-3 mb-2 ml-3" %>
+      <%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-primary mt-3 mb-2 ml-3" %>
+    </div>
   </div>
-</div>
 </div>

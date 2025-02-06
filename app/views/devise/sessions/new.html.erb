@@ -5,7 +5,6 @@
     </div>
     <div class="card-body p-4">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "needs-validation", novalidate: true }) do |f| %>
-        <!-- Email Field -->
         <div class="mb-3">
           <%= f.label :email, class: "form-label fw-bold" %>
           <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", required: true %>
@@ -14,7 +13,6 @@
           </div>
         </div>
 
-        <!-- Password Field -->
         <div class="mb-3">
           <%= f.label :password, class: "form-label fw-bold" %>
           <%= f.password_field :password, class: "form-control", autocomplete: "current-password", required: true %>
@@ -23,7 +21,6 @@
           </div>
         </div>
 
-        <!-- Remember Me Checkbox -->
         <% if devise_mapping.rememberable? %>
           <div class="mb-3 form-check">
             <%= f.check_box :remember_me, class: "form-check-input" %>
@@ -31,13 +28,11 @@
           </div>
         <% end %>
 
-        <!-- Submit Button -->
         <div class="d-grid">
           <%= f.submit "Log in", class: "btn btn-primary btn-lg" %>
         </div>
       <% end %>
 
-      <!-- Shared Links -->
       <div class="mt-4 text-center">
         <%= render "devise/shared/links" %>
       </div>

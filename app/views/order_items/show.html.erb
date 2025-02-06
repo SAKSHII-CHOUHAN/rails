@@ -1,6 +1,8 @@
-<div>
+<%= render 'shared/nav' %>
+
+<div class="card mt-4 p-4 shadow">
   <%= render partial: "order_items/items" %>
-</div>
-<div class="shadow">
-  <%= link_to "Back to orders", orders_path, class: "btn btn-secondary ml-2 mt-2 mb-3" %>
+  <div class="shadow">
+    <%= link_to "Back to orders", orders_path, class: "btn btn-primary ml-2 mt-2 mb-3" %>
+  </div>
 </div>

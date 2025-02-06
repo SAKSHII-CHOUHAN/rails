@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation, :role
+  permit_params :email, :password, :password_confirmation, :role, :restaurant_id
 
   # if current_admin_user.role == "admin"
   #   menu false

@@ -12,7 +12,8 @@ class FeedbacksController < ApplicationController
   def create
     @feedback = @restaurant.feedbacks.build(feedback_params)
     if @feedback.save
-      redirect_to restaurant_path(@restaurant), notice: 'Thank you for your feedback!'
+      flash[:notice] = "Thank you for your feedback!"
+      redirect_to restaurant_path(@restaurant)
     else
       render :new
     end

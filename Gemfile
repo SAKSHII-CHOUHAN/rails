@@ -66,6 +66,5 @@ end
 gem "sassc-rails"
 gem 'activeadmin'
 gem 'will_paginate'
-
-gem "cancancan", "~> 3.6"
+gem 'bootstrap'
 gem "rqrcode"

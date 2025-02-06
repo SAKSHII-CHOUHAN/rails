@@ -26,10 +26,16 @@ class OrdersController < ApplicationController
       )
     end
 
-    order.update(total_amount: total_price)
-
-    table.update(table_status: "occupied")
-    redirect_to table_path(table)
+    if total_price > 0
+      order.update(total_amount: total_price)
+      table.update(table_status: "occupied")
+      flash[:notice] = "Order created successfully."
+      redirect_to table_path(table) 
+    else
+      order.destroy if order.persisted?
+      flash[:alert] = "No items selected for the order."
+      redirect_to table_path(table)
+    end
   end
 
   def show
@@ -41,7 +47,8 @@ class OrdersController < ApplicationController
     @order.update(status: "completed")
     table = @order.table
     table.update(table_status: "unoccupied")
-    redirect_to order_path(@order), notice: "Order completed successfully."
+    flash[:notice] = "Order completed successfully."
+    redirect_to order_path(@order)
   end
 
   private

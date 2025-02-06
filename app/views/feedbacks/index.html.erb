@@ -1,0 +1,33 @@
+<%= render 'shared/nav' %>
+
+<div class="container mt-4">
+  <div class="card shadow">
+      <h3 class="mb-0 p-4">All Feedback</h3>
+    <div class="card-body">
+      <% if @feedbacks.any? %>
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Comments</th>
+              <th>Submitted At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @feedbacks.each do |feedback| %>
+              <tr>
+                <td><%= feedback.name %></td>
+                <td><%= feedback.email %></td>
+                <td><%= feedback.comments %></td>
+                <td><%= feedback.created_at.strftime("%B %d, %Y %I:%M %p") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No feedback found for this restaurant.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

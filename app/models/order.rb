@@ -4,5 +4,5 @@ class Order < ApplicationRecord
   belongs_to :restaurant
   enum :status, [ :pending, :completed ]
 
-  validates :order_items, presence: true  
+  # validates :order_items, presence: true  
 end
