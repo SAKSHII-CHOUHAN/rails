@@ -3,7 +3,21 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :update]
 
   def index
-    @orders = current_user&.restaurant&.orders&.paginate(page: params[:page], per_page: 6)
+    if current_user&.restaurant.present?
+      if params[:table_number].present?
+        @orders = current_user.restaurant.orders
+                                     .joins(:table)
+                                     .where(tables: { table_number: params[:table_number] })
+                                     .order(created_at: :desc).paginate(page: params[:page], per_page: 6)
+      else
+        @orders = current_user.restaurant.orders
+                                     .order(created_at: :desc)
+                                     .paginate(page: params[:page], per_page: 6)
+      end
+    else
+      @orders = Order.none
+    end
+    # @orders = current_user&.restaurant&.orders&.paginate(page: params[:page], per_page: 6)
   end
 
   def create

@@ -10,7 +10,5 @@ ActiveAdmin.register_page "Dashboard" do
     end
   end 
 
-  # if current_admin_user.role == "admin"
-  #   menu false
-  # end
+  menu false if proc { current_admin_user.admin? }
 end

@@ -1,9 +1,27 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation, :role, :restaurant_id
 
-  # if current_admin_user.role == "admin"
-  #   menu false
-  # end
+  controller do
+    before_action :restrict_admin_access
+
+    def scoped_collection
+      if current_admin_user.super_admin?
+        AdminUser.all
+      else
+        AdminUser.none
+      end
+    end
+
+    private
+
+    def restrict_admin_access
+      unless current_admin_user.super_admin?
+        redirect_to admin_dashboard_path, alert: "You are not authorized to access this page."
+      end
+    end
+  end
+
+  # menu false if proc { current_admin_user.admin? }
 
   index do
     selectable_column
@@ -26,6 +44,7 @@ ActiveAdmin.register AdminUser do
       f.input :password
       f.input :password_confirmation
       f.input :role
+      f.input :restaurant
     end
     f.actions
   end
