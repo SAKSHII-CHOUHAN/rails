@@ -33,11 +33,17 @@ class OrdersController < ApplicationController
       price = menu_item&.price * quantity
       total_price += price
 
-      order&.order_items&.create!(
-        name: menu_item&.name,
-        quantity: quantity,
-        amount: price
-      )
+      existing_order_item = order.order_items.find_by(name: menu_item.name)
+
+      if existing_order_item
+        existing_order_item.update(quantity: existing_order_item.quantity + quantity, amount: existing_order_item.amount + price)
+      else
+        order.order_items.create!(
+          name: menu_item.name,
+          quantity: quantity,
+          amount: price
+        )
+      end
     end
 
     if total_price > 0
@@ -65,9 +71,22 @@ class OrdersController < ApplicationController
     redirect_to order_path(@order)
   end
 
+  def remove_order_item
+    order = Order.find(params[:id])
+    order_item = order.order_items.find(params[:order_item_id])
+  
+    order_item.destroy
+    new_total = order.order_items.sum(:amount)
+    order.update(total_amount: new_total)
+  
+    flash[:notice] = "Item removed from order."
+    redirect_to table_path(order.table)
+  end
+  
   private
 
   def set_order
-    @order = Order.find(params[:id])
+    @order = current_user.restaurant.orders.find_by(id: params[:id])
+    redirect_to dashboard_index_path, alert: "Order not found" if @order.nil?
   end
 end

@@ -8,8 +8,13 @@ Rails.application.routes.draw do
   resources :menu_items
   
   resources :tables
-  resources :orders
-  resources :order_items
+  resources :orders do
+    member do
+      delete 'remove_order_item/:order_item_id', to: 'orders#remove_order_item', as: :remove_order_item
+    end
+  end
+  
+  resources :order_items 
   resources :tables do
     post 'create_order', to: 'orders#create'
   end

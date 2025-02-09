@@ -41,22 +41,46 @@
               </td>
             </tr>
           <% end %>
-          </tbody>
-          </table>
-          <%= will_paginate @menu_items %>
+        </tbody>
+      </table>
+        <%= will_paginate @menu_items %>
       <%= f.submit "Place Order", class: "btn btn-primary mt-3" %>
     <% end %>
   </div>
 
   <% if @order.present? %>
     <div class="card mt-4 p-4 shadow">
+      <h3>Selected Order Items</h3>
+      <table class="table table-stripped">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Order id</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_items.each do |order_item| %>
+            <tr>
+              <td><%= order_item.name %></td>
+              <td><%= order_item.quantity %></td>
+              <td>₹<%= order_item.amount %></td>
+              <td><%= order_item.order_id %></td>
+              <td>
+                <%= button_to "Remove", remove_order_item_order_path(@order, order_item.id), method: :delete,
+                  class: "btn btn-danger btn-sm",
+                  data: { confirm: "Are you sure you want to remove this item?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
       <%= form_with url: order_path(@order), method: :patch do |f| %>
-        <%= render partial: "order_items/items" %>
         <%= f.submit "Complete Order", class: "btn btn-primary mt-3" %>
       <% end %>
     </div>
   <% end %>
-  <div class="shadow">
-    <%= link_to "Back to Dashboard", dashboard_index_path, class: "btn btn-primary mt-3" %>
-  </div>
 </div>
