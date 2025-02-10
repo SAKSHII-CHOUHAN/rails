@@ -64,11 +64,12 @@ class OrdersController < ApplicationController
   end
 
   def update
+    byebug
     @order.update(status: "completed")
     table = @order.table
     table.update(table_status: "unoccupied")
     flash[:notice] = "Order completed successfully."
-    redirect_to order_path(@order)
+    redirect_to new_payment_path(id: @order.id)
   end
 
   def remove_order_item

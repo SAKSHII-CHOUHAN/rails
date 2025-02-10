@@ -51,6 +51,12 @@ group :development, :test do
   gem 'byebug'
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "simplecov", require: false
+  gem 'shoulda-matchers', '~> 6.0'
+  gem 'dotenv-rails'
+
 end
 
 group :development do
@@ -68,3 +74,6 @@ gem 'activeadmin'
 gem 'will_paginate'
 gem 'bootstrap'
 gem "rqrcode"
+gem 'stripe'
+# gem 'braintree'
+

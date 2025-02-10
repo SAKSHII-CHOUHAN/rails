@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "charges/new"
+  get "charges/create"
   get "restaurants/show"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
       delete 'remove_order_item/:order_item_id', to: 'orders#remove_order_item', as: :remove_order_item
     end
   end
+  resource :payment, only: [:new, :create]
   
   resources :order_items 
   resources :tables do
