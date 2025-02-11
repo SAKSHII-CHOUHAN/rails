@@ -103,6 +103,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_05_125553) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.string "customer_name"
+    t.string "customer_email"
     t.integer "status"
     t.decimal "total_amount"
     t.bigint "restaurant_id"

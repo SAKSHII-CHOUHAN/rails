@@ -28,6 +28,22 @@ Rails.application.configure do
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
 
+  config.action_mailer.delivery_method = :smtp
+  # host = 'example.com' #replace with your own url
+  
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => "sakshichouhan016",
+    :password             => "hzzq hgou sahu oqip",
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
+
+  config.action_mailer.asset_host = "http://localhost:3000"
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 

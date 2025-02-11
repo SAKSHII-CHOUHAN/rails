@@ -15,8 +15,8 @@ Rails.application.routes.draw do
       delete 'remove_order_item/:order_item_id', to: 'orders#remove_order_item', as: :remove_order_item
     end
   end
-  resource :payment, only: [:new, :create]
   
+  resource :payment, only: [:new, :create]
   resources :order_items 
   resources :tables do
     post 'create_order', to: 'orders#create'

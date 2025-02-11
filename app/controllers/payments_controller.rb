@@ -3,15 +3,18 @@ class PaymentsController < ApplicationController
   before_action :set_order
 
   def new
-    byebug
     @amount = @order.total_amount.to_i
   end
 
   def create
     begin
-      
+      customer =  Stripe::Customer.create({
+        name: @order.customer_name,
+        email: @order.customer_email,
+      })
       payment_intent = Stripe::PaymentIntent.create({
         amount: @order.total_amount.to_i, 
+        customer: customer.id,
         currency: 'usd',
         payment_method: params[:payment_method_id],
         confirmation_method: 'manual', 
@@ -21,6 +24,20 @@ class PaymentsController < ApplicationController
 
       if payment_intent.status == 'succeeded'
         @order.update(status: 'paid')
+
+        Stripe::InvoiceItem.create({
+          customer: customer.id,
+          amount: @order.total_amount.to_i,
+          currency: 'usd',
+          description: "Invoice for Order ##{@order.id}",
+        })
+
+        invoice = Stripe::Invoice.create({
+          customer: customer.id,
+          auto_advance: true,
+        })
+        Rails.logger.info("Invoice created: #{invoice.inspect}")
+        invoice.finalize_invoice
 
         redirect_to dashboard_index_path, notice: 'Payment successful!'
       else

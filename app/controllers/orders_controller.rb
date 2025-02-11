@@ -6,23 +6,27 @@ class OrdersController < ApplicationController
     if current_user&.restaurant.present?
       if params[:table_number].present?
         @orders = current_user.restaurant.orders
-                                     .joins(:table)
-                                     .where(tables: { table_number: params[:table_number] })
-                                     .order(created_at: :desc).paginate(page: params[:page], per_page: 6)
+                  .joins(:table)
+                  .where(tables: { table_number: params[:table_number] })
+                  .order(created_at: :desc).paginate(page: params[:page], per_page: 6)
       else
         @orders = current_user.restaurant.orders
-                                     .order(created_at: :desc)
-                                     .paginate(page: params[:page], per_page: 6)
+                  .order(created_at: :desc)
+                  .paginate(page: params[:page], per_page: 6)
       end
     else
       @orders = Order.none
     end
-    # @orders = current_user&.restaurant&.orders&.paginate(page: params[:page], per_page: 6)
   end
 
   def create
     table = Table.find(params[:table_id])
-    order = table&.orders&.find_or_create_by(status: "pending", restaurant_id: table.restaurant_id)
+    @order = table&.orders&.find_or_create_by(
+      customer_name: params[:customer_name],
+      customer_email: params[:customer_email],
+      status: "pending",
+      restaurant_id: table.restaurant_id
+      )
     total_price = 0
 
     params[:order][:items].each do |menu_item_id, quantity|
@@ -33,12 +37,12 @@ class OrdersController < ApplicationController
       price = menu_item&.price * quantity
       total_price += price
 
-      existing_order_item = order.order_items.find_by(name: menu_item.name)
+      existing_order_item = @order.order_items.find_by(name: menu_item.name)
 
       if existing_order_item
         existing_order_item.update(quantity: existing_order_item.quantity + quantity, amount: existing_order_item.amount + price)
       else
-        order.order_items.create!(
+        @order.order_items.create!(
           name: menu_item.name,
           quantity: quantity,
           amount: price
@@ -47,12 +51,12 @@ class OrdersController < ApplicationController
     end
 
     if total_price > 0
-      order.update(total_amount: total_price)
+      @order.update(total_amount: total_price)
       table.update(table_status: "occupied")
       flash[:notice] = "Order created successfully."
       redirect_to table_path(table) 
     else
-      order.destroy if order.persisted?
+      @order.destroy if @order.persisted?
       flash[:alert] = "No items selected for the order."
       redirect_to table_path(table)
     end
@@ -64,7 +68,6 @@ class OrdersController < ApplicationController
   end
 
   def update
-    byebug
     @order.update(status: "completed")
     table = @order.table
     table.update(table_status: "unoccupied")
