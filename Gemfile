@@ -74,6 +74,9 @@ gem 'activeadmin'
 gem 'will_paginate'
 gem 'bootstrap'
 gem "rqrcode"
+gem 'hotwire-rails'
+
+# gem 'razorpay'
 gem 'stripe'
 # gem 'braintree'
 

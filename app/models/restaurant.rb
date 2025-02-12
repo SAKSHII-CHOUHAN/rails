@@ -1,9 +1,4 @@
 class Restaurant < ApplicationRecord
-  validates :name, presence: true
-  validates :address, presence: true
-  validates :owner_name, presence: true
-  validates :owner_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-
   has_many :users, dependent: :destroy
   has_many :tables, dependent: :destroy
   has_many :orders, dependent: :destroy
@@ -11,10 +6,12 @@ class Restaurant < ApplicationRecord
   has_many :feedbacks, dependent: :destroy
   has_one :admin_user, dependent: :destroy
 
+  validates :name, :address, :owner_name, presence: true
+  validates :owner_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+
   has_one_attached :qr
 
   after_create :generate_qr_code
-  # after_update :generate_qr_code
 
   private
 

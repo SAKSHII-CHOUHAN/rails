@@ -1,6 +1,6 @@
-<%= form_with(model: @table, method: :get, class: "d-flex") do %>
+<%= form_with(model: @table, method: :get, data: { turbo_action: "replace" }, id: "search_form", class: "d-flex") do %>
   <div class="input-group w-50">
-    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search here", aria: {label: "Search"} %>
+    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search here", data: { controller: "tables", action: "input->search#submit" }, aria: {label: "Search"} %>
     <button type="submit" class="btn btn-primary input-group-append">Search</button>
      <%= link_to "Back", table_path(@table), class: "btn btn-outline-secondary" %>
   </div>

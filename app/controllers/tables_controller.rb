@@ -8,9 +8,9 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     if params[:search].present?
-      @menu_items = current_user&.restaurant&.menu_items.
-      where("category LIKE ?", params[:search].capitalize)
-      .or(current_user&.restaurant&.menu_items.where("name LIKE ?", params[:search]))
+      @menu_items = current_user&.restaurant&.menu_items
+      .where("category ILIKE ?", "%#{params[:search]}%")
+      .or(current_user&.restaurant&.menu_items.where("name ILIKE ?", "%#{params[:search]}%"))
       .paginate(page: params[:page], per_page: 1)
     else
       @menu_items = current_user.restaurant.menu_items.paginate(page: params[:page], per_page: 4)

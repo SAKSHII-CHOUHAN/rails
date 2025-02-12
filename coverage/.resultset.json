@@ -922,6 +922,12 @@
           null
         ]
       },
+      "/home/developer/Restaurant_management/project/app/helpers/charges_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
       "/home/developer/Restaurant_management/project/app/helpers/dashboard_helper.rb": {
         "lines": [
           1,
@@ -970,6 +976,12 @@
           null
         ]
       },
+      "/home/developer/Restaurant_management/project/app/helpers/payments_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
       "/home/developer/Restaurant_management/project/app/helpers/restaurants_helper.rb": {
         "lines": [
           1,
@@ -982,16 +994,11 @@
           null
         ]
       },
-      "/home/developer/Restaurant_management/project/app/models/user.rb": {
+      "/home/developer/Restaurant_management/project/app/models/order_item.rb": {
         "lines": [
           1,
           1,
           null,
-          null,
-          1,
-          1,
-          null,
-          1,
           1,
           null
         ]
@@ -1011,18 +1018,13 @@
           null
         ]
       },
-      "/home/developer/Restaurant_management/project/app/models/restaurant.rb": {
+      "/home/developer/Restaurant_management/project/app/models/order.rb": {
         "lines": [
           1,
           1,
           1,
           1,
-          1,
           null,
-          1,
-          1,
-          1,
-          1,
           1,
           1,
           null,
@@ -1030,17 +1032,15 @@
           null,
           1,
           null,
-          null,
           1,
           null,
           1,
-          0,
           0,
           null,
           null
         ]
       }
     },
-    "timestamp": 1739172274
+    "timestamp": 1739357359
   }
 }
