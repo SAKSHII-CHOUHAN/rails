@@ -1,53 +1,19 @@
-<h1 class="page-title">Complete Payment</h1>
+<h2>Complete Payment for Order <%= @order.id %></h2>
+<p>Total Amount: ₹<%= @order.total_amount %></p>
 
-<%= form_with url: payment_path(id: @order.id), method: :post, id: 'payment-form', class: 'payment-form' do |form| %>
-  <div class="form-container">
-    <div id="card-element" class="form-element">
-      <!-- A Stripe Element will be inserted here. -->
-    </div>
-
-    <div id="card-errors" role="alert" class="error-message"></div>
-
-    <%= form.hidden_field :order_id, value: @order.id %>
-
-    <div class="submit-container">
-      <%= form.submit 'Pay Now', id: 'submit-button', class: 'submit-button' %>
-    </div>
-  </div>
-<% end %>
-
-<script src="https://js.stripe.com/v3/"></script>
-
-<script>
-  var stripe = Stripe('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>');
-  var elements = stripe.elements();
-  var card = elements.create('card');
-  card.mount('#card-element');
-
-  var form = document.getElementById('payment-form');
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    stripe.createPaymentMethod('card', card).then(function(result) {
-      if (result.error) {
-        // Display error message to the user
-        var errorElement = document.getElementById('card-errors');
-        errorElement.textContent = result.error.message;
-        errorElement.classList.add('visible');
-      } else {
-        // Send the paymentMethod.id to the server for further processing
-        stripePaymentMethodHandler(result.paymentMethod.id);
-      }
-    });
-  });
-
-  function stripePaymentMethodHandler(paymentMethodId) {
-    var form = document.getElementById('payment-form');
-    var hiddenInput = document.createElement('input');
-    hiddenInput.setAttribute('type', 'hidden');
-    hiddenInput.setAttribute('name', 'payment_method_id');
-    hiddenInput.setAttribute('value', paymentMethodId);
-    form.appendChild(hiddenInput);
-    form.submit();
-  }
-</script>
+<form action="<%= payments_path %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="order_id" value="<%= @order.id %>">
+  
+  <script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="<%= @razorpay_key %>"
+    data-amount="<%= @order.total_amount * 100 %>"
+    data-currency="INR"
+    data-order_id="<%= @razorpay_order_id %>"
+    data-name="Restaurant"
+    data-description="Order Payment"
+    data-prefill.name="<%= @order.customer_name %>"
+    data-prefill.email="<%= @order.customer_email %>"
+    data-theme.color="#3399cc">
+  </script>
+</form>

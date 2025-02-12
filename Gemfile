@@ -76,7 +76,7 @@ gem 'bootstrap'
 gem "rqrcode"
 gem 'hotwire-rails'
 
-# gem 'razorpay'
+gem 'razorpay'
 gem 'stripe'
 # gem 'braintree'
 

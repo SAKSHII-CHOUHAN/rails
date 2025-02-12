@@ -2,19 +2,23 @@
 <table class="table table-striped">
   <thead class="table-dark">
     <tr>
-      <th>Name</th>
+      <th>Customer Name </th>
+      <th>Item Name</th>
       <th>Price</th>
       <th>Quantity</th>
       <th>Order id</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
     <% @order_items&.each do |item| %>
       <tr>
+        <td><%= item.order.customer_name %></td>
         <td><%= item.name %></td>
         <td>₹<%= item.amount %></td>
         <td><%= item.quantity %></td>
         <td><%= item.order_id %></td>
+        <td><%= item.order.status %></td>
       </tr>
     <% end %>
   </tbody>

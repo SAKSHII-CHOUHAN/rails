@@ -13,7 +13,8 @@ Rails.application.routes.draw do
     end
   end
   
-  resource :payment, only: [:new, :create]
+  resources :payments, only: [:new, :create]
+
   resources :order_items, only: [:show]
   resources :tables do
     post 'create_order', to: 'orders#create'
